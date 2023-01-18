@@ -4,7 +4,7 @@ from datetime import datetime
 
 import matplotlib.pyplot as plt
 
-path = Path('weather_data/sitka_weather_2021_simple.csv')
+path = Path('weather_data/sitka_weather_07-2021_simple.csv')
 
 lines = path.read_text().splitlines()
 
@@ -13,24 +13,21 @@ header_row = next(reader)
 # for index, column_header in enumerate(header_row):
 #     print(index, column_header)
 
-# Extract dates, and high and low temperatures.
-highs, lows, dates = [], [], []
+# Extract high temperatures.
+highs, dates = [], []
 for row in reader:
-    high = int(row[4])
-    low = int(row[5])
     current_date = datetime.strptime(row[2], '%Y-%m-%d')
-    highs.append(high)
-    lows.append(low)
+    high = int(row[4])
     dates.append(current_date)
+    highs.append(high)
 
 # Plot the high temperatures.
 plt.style.use('seaborn')
 fig, ax = plt.subplots()
 ax.plot(dates, highs, color='red')
-ax.plot(dates, lows, color='blue')
 
 # Format plot.
-ax.set_title("Daily High and Low Temperatures, 2021", fontsize=24)
+ax.set_title("Daily High Temperatures, July 2021", fontsize=24)
 ax.set_xlabel('', fontsize=16)
 fig.autofmt_xdate()
 ax.set_ylabel('Temperature', fontsize=16)
